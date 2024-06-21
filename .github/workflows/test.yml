@@ -1,0 +1,20 @@
+name: Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-22.04
+    permissions: {}
+    steps:
+      - run: |
+          gh release download \
+            -R "heroku/heroku-jvm-application-deployer" \
+            -p "*.jar" \
+            -O ".downloads/heroku-jvm-application-deployer.jar" \
+            "v4.0.6"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: md5sum .downloads/heroku-jvm-application-deployer.jar
